@@ -42,3 +42,4 @@ next-env.d.ts
 
 #ggthaka
 .ggthaka/tmp/*.log
+AGENTS.md
