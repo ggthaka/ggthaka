@@ -1,0 +1,175 @@
+.TaskManager {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.TaskManager
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.Summary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.Summary > span {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.CreatePanel,
+.ListPanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.Create {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.Filters {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 620px;
+  overflow: auto;
+  padding: 12px;
+}
+
+.Empty {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+.Item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+}
+
+.ItemHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.Row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.Input,
+.Select,
+.Textarea {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 9px 10px;
+  font: inherit;
+  color: inherit;
+  background-color: var(--color-background);
+}
+
+.Textarea {
+  resize: vertical;
+  min-height: 84px;
+}
+
+.Button {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--color-secondary);
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .Filters,
+  .Row {
+    grid-template-columns: 1fr;
+  }
+}

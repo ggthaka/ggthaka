@@ -1,0 +1,120 @@
+.Content {
+  height: clamp(100vh, 100vh, 100vh);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--color-secondary);
+  border-right: 1px solid var(--color-highlight);
+  overflow-y: auto;
+  z-index: 3;
+}
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  background-color: var(--color-secondary);
+  gap: 56px;
+}
+
+.Trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: 1px solid var(--color-highlight);
+}
+
+.Trigger:hover {
+  background-color: var(--color-background);
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-grow: 1;
+  padding-block: 56px;
+  gap: 56px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .Header {
+    z-index: 9999;
+  }
+
+  .Aside {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+    height: clamp(100vh, 100vh, 100vh);
+    width: clamp(100vw, 100vw, 100vw);
+    width: 100vw;
+  }
+
+  .Cover {
+    flex-grow: 1;
+    height: 100%;
+    background-color: var(--color-transparent);
+  }
+
+  .Content {
+    padding-inline: 16px 8px;
+  }
+
+  @media (orientation: portrait) {
+    .Content {
+      min-width: 65%;
+    }
+  }
+
+  @media (orientation: landscape) {
+    .Content {
+      min-width: 45%;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .Content {
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .Cover {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1536px) {
+  .Content {
+    padding-inline: 28px 16px;
+  }
+}
+
+@media (min-width: 1537px) and (max-width: 2304px) {
+  .Content {
+    padding-inline: 56px 16px;
+  }
+}
+
+@media (min-width: 2305px) {
+  .Content {
+    padding-inline: calc(112px + (100vw - 2305px) / 2) 16px;
+  }
+}

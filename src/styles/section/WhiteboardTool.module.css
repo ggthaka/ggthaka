@@ -1,0 +1,183 @@
+.WhiteboardTool {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.WhiteboardTool
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.TopbarLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.45;
+}
+
+.TopbarActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ActionButton,
+.InkButton {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ActionButton,
+.InkButton {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 12px;
+  min-height: calc(100vh - 260px);
+}
+
+.LeftPanel,
+.Stage {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.LeftPanel {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.PanelSection {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.PanelTitle {
+  font-size: 14px;
+}
+
+.LabelInline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.Range {
+  width: 100%;
+  accent-color: var(--color-primary);
+}
+
+.ValueText {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.InkGroup {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.InkButtonActive {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.Tips {
+  list-style: disc;
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.Stage {
+  padding: 10px;
+  display: flex;
+}
+
+.Canvas {
+  width: 100%;
+  flex: 1;
+  min-height: 620px;
+  border: 1px dashed var(--color-highlight);
+  border-radius: 14px;
+  background:
+    linear-gradient(var(--color-background), var(--color-background)),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 23px,
+      var(--color-highlight) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 23px,
+      var(--color-highlight) 24px
+    );
+  touch-action: none;
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .Canvas {
+    min-height: 420px;
+  }
+}

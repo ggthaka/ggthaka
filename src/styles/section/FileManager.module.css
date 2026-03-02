@@ -1,0 +1,405 @@
+.FileManager {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.FileManager
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.Stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.Stats span {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background-color: var(--color-background);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.Controls,
+.ListPanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.Controls {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.PathCard {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.PathLabel {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.PathValue {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.Breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Input {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+}
+
+.HiddenInput {
+  display: none;
+}
+
+.InlineGroup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.FieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Textarea {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.Actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.TransferPanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.TransferTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.TransferRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+}
+
+.RenamePanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.RenameTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.RenameRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.DeletePanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.DeleteTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.DeleteRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Note {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.Message {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-primary);
+}
+
+.Button {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--color-secondary);
+}
+
+.Button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.ListPanel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.PanelTitle {
+  margin: 0;
+  border-bottom: 1px solid var(--color-highlight);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  background-color: var(--color-background);
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  max-height: 620px;
+  overflow: auto;
+}
+
+.Item {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.Item:hover {
+  background-color: var(--color-secondary);
+}
+
+.ItemMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ItemMeta span {
+  font-size: 12px;
+  opacity: 0.82;
+  overflow-wrap: anywhere;
+}
+
+.ItemActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Empty {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+.Error {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
+.PreviewPanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.PreviewTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.PreviewImage {
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+}
+
+.PreviewText {
+  margin: 0;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  padding: 10px;
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.PreviewEditor {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+  min-height: 180px;
+  padding: 10px;
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.SelectEntry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .InlineGroup {
+    grid-template-columns: 1fr;
+  }
+
+  .TransferRow {
+    grid-template-columns: 1fr;
+  }
+
+  .RenameRow {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,521 @@
+.TableContainer {
+  padding: 14px;
+  border-radius: 24px;
+  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid var(--color-highlight);
+  min-width: calc(100% - 28px - 2px);
+  max-width: calc(100% - 28px - 2px);
+  overflow-x: auto;
+  background-color: var(--color-secondary);
+  position: relative;
+}
+
+.Table {
+  border-collapse: collapse;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-background);
+
+  min-width: 100%;
+}
+
+.TableWrapper {
+  min-width: 100%;
+  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.Table thead tr th:hover {
+  background-color: transparent;
+  /* height: 56px; */
+}
+
+.Table thead tr th {
+  text-align: left;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 20px 24px;
+  position: relative;
+}
+
+.Table thead tr th::first-letter {
+  text-transform: capitalize;
+}
+
+.Table thead tr th:not(:last-child) {
+  border-right: 1px solid var(--color-highlight);
+}
+
+.Table tbody tr {
+  transition: all 0.2s ease-in-out;
+}
+
+.Table tbody tr:hover {
+  background-color: var(--color-secondary);
+}
+
+.Table tbody tr td {
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--color-foreground);
+  vertical-align: middle;
+}
+
+.Table tbody tr td:not(:last-child) {
+  border-right: 1px solid var(--color-highlight);
+  /* background-color: var(--color-secondary); */
+}
+
+.Table tfoot {
+  background-color: var(--color-secondary);
+  border-top: 1px solid var(--color-highlight);
+}
+
+.Table tfoot tr td {
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .Table thead tr th,
+  .Table tbody tr td,
+  .Table tfoot tr td {
+    padding: 12px 16px;
+  }
+}
+
+/* UI Elements */
+.SearchInput,
+.CustomLimitInput {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 16px;
+  font-family: inherit;
+  width: clamp(72px, 24vw, 128px);
+}
+
+.SearchInput:focus,
+.CustomLimitInput:focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+}
+
+.CustomLimitInput {
+  width: clamp(28px, 24vw, 56px);
+}
+
+.NavButton {
+  background-color: var(--color-foreground);
+  color: var(--color-background);
+}
+
+.CustomLimitButton,
+.NavButton {
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid var(--color-highlight);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 700;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.NavButton {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+.NavButton:disabled {
+  opacity: 32%;
+  cursor: not-allowed;
+}
+
+.Footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  left: 0px;
+  width: 100%;
+}
+
+.MetaInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: var(--color-foreground);
+}
+
+.Controls {
+  gap: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.Active {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.PageNumber {
+  font-size: 14px;
+  color: var(--color-foreground);
+  padding: 0 8px;
+}
+
+.Sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.Sortable:hover {
+  background-color: var(--color-secondary);
+}
+
+/* .Loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 16px;
+} */
+
+.Avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.SearchWrapper {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  position: sticky;
+  left: 0px;
+}
+
+.ColumnTogglePanel {
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-highlight);
+  width: calc(100% - 32px - 2px);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.ColumnToggleHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 800;
+  color: var(--color-foreground);
+}
+
+.ColumnToggleActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ColumnToggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* max-height: 240px; */
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.ColumnToggleItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.PinActions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.PinButton {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: 1px solid var(--color-highlight);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.PinButton[data-active='true'] {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.PinnedCell {
+  background-color: var(--color-background);
+  box-shadow: 2px 0 0 0 var(--color-highlight);
+}
+
+.ColumnToggleLabel {
+  line-height: 1.2;
+}
+
+.BulkActionsBar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.BulkActionsSelected {
+  font-weight: 800;
+  color: var(--color-foreground);
+}
+
+.BulkActionsButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.BulkActionsClear {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.SearchButton {
+  padding: 6px;
+  border-radius: 10px;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.FilterWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.Icon {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.IconDefault {
+  transform: rotate(360deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.ThContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.DraggableHeader {
+  cursor: grab;
+  user-select: none;
+}
+
+.DraggingHeader {
+  opacity: 0.6;
+}
+
+.ResizeHandle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 2;
+}
+
+.ResizeHandle::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 2px;
+  width: 2px;
+  height: 60%;
+  background-color: var(--color-highlight);
+  opacity: 0.6;
+  border-radius: 999px;
+}
+
+.SearchInputB {
+  background-color: var(--color-secondary);
+}
+
+/* Checkbox */
+.CheckboxLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CheckboxInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.CustomCheckbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-highlight);
+  cursor: pointer;
+  vertical-align: middle;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.CheckboxLabel:hover .CustomCheckbox {
+  box-shadow: 0 0 0 2px var(--color-highlight);
+}
+
+.CheckboxInput:active + .CustomCheckbox {
+  transform: scale(0.96);
+}
+
+.CheckboxInput:focus-visible + .CustomCheckbox {
+  box-shadow: 0 0 0 2px var(--color-highlight);
+}
+
+.CheckboxInput:disabled + .CustomCheckbox {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.CheckboxInput:checked + .CustomCheckbox {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.CustomCheckbox::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -55%) rotate(-45deg);
+}
+
+.CheckboxInput:checked + .CustomCheckbox::after {
+  border-color: var(--color-background);
+}
+
+.Exports {
+  border: 1px solid var(--color-highlight);
+  width: calc(100% - 32px - 2px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 28px;
+  background-color: var(--color-secondary);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.Exports > p {
+  font-weight: 700;
+}
+
+.GeneralExports {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.GeneralExports p {
+  font-weight: 700;
+}
+
+.ExportOptions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}

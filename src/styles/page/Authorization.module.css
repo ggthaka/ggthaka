@@ -1,0 +1,11 @@
+.Authorization {
+  height: clamp(100vh, 100vh, 100vh);
+  width: clamp(100vw, 100vw, 100vw);
+  width: 100vw;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+}

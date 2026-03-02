@@ -1,0 +1,556 @@
+.ApiTester {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ApiTester,
+.ApiTester * {
+  box-sizing: border-box;
+}
+
+.ApiTester
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.StatusBlock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.StatusBadge {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background-color: var(--color-background);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.StatusMeta {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background-color: var(--color-background);
+  font-size: 12px;
+}
+
+.Warning {
+  margin: 0;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.Message {
+  margin: 0;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  gap: 12px;
+  min-width: 0;
+}
+
+.RequestPanel,
+.SidePanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.Composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.FieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.Label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.LabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.HelpText {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.ErrorText {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 12px;
+}
+
+.PreviewUrl {
+  margin: 0;
+  border: 1px dashed var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 8px 10px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.Row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.UrlGroup {
+  min-width: 0;
+}
+
+.GridThree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.Accordion {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+}
+
+.AccordionSummary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.AccordionSummary::-webkit-details-marker {
+  display: none;
+}
+
+.AccordionContent {
+  border-top: 1px solid var(--color-highlight);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.KeyValueList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.KeyValueRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.SyntaxBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.SyntaxBlock {
+  color: #abb2bf !important;
+}
+
+.SyntaxBlock span:not([style]) {
+  color: #abb2bf !important;
+}
+
+.SyntaxLabel {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.82;
+}
+
+.SidePanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.Presets,
+.History,
+.Response {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.Response {
+  flex: 1;
+}
+
+.History,
+.Response {
+  border-top: 1px solid var(--color-highlight);
+}
+
+.Presets,
+.History {
+  height: 260px;
+  max-height: 260px;
+}
+
+.PanelBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0 12px;
+}
+
+.PanelTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+}
+
+.Presets .Empty {
+  padding: 0 12px;
+}
+
+.Preset {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: 8px;
+  align-items: stretch;
+  padding: 0 12px;
+}
+
+.PresetButton {
+  width: calc(100% - 0px);
+  max-width: 100%;
+  text-align: left;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.PresetButton strong,
+.PresetButton span {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.PresetButton:hover {
+  background-color: var(--color-secondary);
+}
+
+.PresetActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.HistoryButton {
+  margin: 0 12px;
+  width: calc(100% - 24px);
+  max-width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.HistoryButton:hover {
+  background-color: var(--color-secondary);
+}
+
+.HistoryUrl {
+  font-size: 12px;
+  opacity: 0.82;
+  overflow-wrap: anywhere;
+}
+
+.Input,
+.Select,
+.Textarea {
+  width: calc(100% - 0px);
+  max-width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  padding: 9px 10px;
+}
+
+.Textarea {
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.InputError {
+  border-color: var(--color-primary);
+}
+
+.SelectCompact {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  padding: 6px 8px;
+}
+
+.Actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Button {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--color-secondary);
+}
+
+.Button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.GhostButton {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.GhostButton:hover {
+  background-color: var(--color-background);
+}
+
+.GhostButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ButtonWithSpinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.Spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Empty {
+  margin: 0;
+  opacity: 0.82;
+  font-size: 13px;
+}
+
+.ResponseMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px;
+  min-width: 0;
+}
+
+.ResponseStatus {
+  border: 1px solid var(--color-highlight);
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Success {
+  background-color: color-mix(in srgb, var(--color-highlight) 20%, transparent);
+}
+
+.Failure {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ResponseActions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.Output {
+  margin: 0 12px 12px;
+  max-height: 380px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  min-width: 0;
+}
+
+.OutputJson {
+  margin: 0 12px 0;
+  width: calc(100% - 24px);
+  max-width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  overflow: auto;
+  max-height: 380px;
+}
+
+@media (max-width: 1080px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .Presets,
+  .History {
+    height: 240px;
+    max-height: 240px;
+  }
+
+  .Row,
+  .GridThree {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .Preset {
+    grid-template-columns: 1fr;
+  }
+
+  .PresetActions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .KeyValueRow {
+    grid-template-columns: 1fr;
+  }
+
+  .StatusBlock {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

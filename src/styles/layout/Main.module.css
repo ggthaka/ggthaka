@@ -1,0 +1,58 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-grow: 1;
+  padding-top: 56px;
+  gap: 56px;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .Page,
+  .Panel {
+    padding-inline: 16px;
+    width: calc(100% - 32px);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1536px) {
+  .Page {
+    padding-inline: 28px;
+    width: calc(100% - 56px);
+  }
+
+  .Panel {
+    padding-inline: 16px 28px;
+    width: calc(100% - 28px - 16px);
+  }
+}
+
+@media (min-width: 1537px) and (max-width: 2304px) {
+  .Page {
+    padding-inline: 56px;
+    width: calc(100% - 112px);
+  }
+
+  .Panel {
+    padding-inline: 16px 56px;
+    width: calc(100% - 56px - 16px);
+  }
+}
+
+@media (min-width: 2305px) {
+  .Page {
+    padding-inline: calc(112px + (100vw - 2305px) / 2);
+    width: calc(100vw - (224px + (100vw - 2305px)));
+  }
+
+  .Panel {
+    padding-inline: 16px calc(112px + (100vw - 2305px) / 2);
+    width: calc(100% - calc(112px + (100vw - 2305px) / 2) - 16px);
+  }
+}
+
+.Container {
+  gap: 28px;
+}

@@ -1,0 +1,236 @@
+.ClipboardManager {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ClipboardManager
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.Stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.Stats span {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background-color: var(--color-background);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.Controls,
+.ListPanel {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.Controls {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ControlHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.PanelTitle {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.PanelDescription {
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+.Label {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.Textarea,
+.Search {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+}
+
+.Textarea {
+  min-height: 200px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.HelperRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.Actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Button {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--color-secondary);
+}
+
+.Button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.Message,
+.Empty {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.Message {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background-color: var(--color-background);
+}
+
+.ListPanel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ListHeader {
+  border-bottom: 1px solid var(--color-highlight);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  background-color: var(--color-background);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 600px;
+  overflow: auto;
+  padding: 12px;
+}
+
+.Item {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 10px;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ItemMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.ItemValue {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 220px;
+  overflow: auto;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  padding: 10px;
+}
+
+.ItemActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+  }
+}

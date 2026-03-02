@@ -1,0 +1,450 @@
+.DiagramWhiteboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.DiagramWhiteboard
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.TopbarLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.45;
+}
+
+.TopbarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.ViewToggle,
+.ActionButton,
+.SidebarTab,
+.TemplateCard,
+.InkButton {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ViewToggle,
+.ActionButton,
+.SidebarTab,
+.InkButton {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ViewToggleActive,
+.SidebarTabActive,
+.InkButtonActive {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 340px;
+  gap: 12px;
+  min-height: calc(100vh - 260px);
+}
+
+.Sidebar,
+.Stage,
+.Inspector {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.Sidebar {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.SidebarTabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.TemplateGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.TemplateCard {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 4px;
+  padding: 10px;
+}
+
+.TemplateCard span {
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.OutlineList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: auto;
+  max-height: 100%;
+  padding-right: 2px;
+}
+
+.OutlineList li {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  background-color: var(--color-background);
+}
+
+.Stage {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ToolbarFloating {
+  border: 1px solid var(--color-highlight);
+  border-radius: 14px;
+  background-color: var(--color-background);
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.Select,
+.Textarea {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+}
+
+.Select {
+  width: 190px;
+}
+
+.ZoomControl {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+}
+
+.ZoomControl span {
+  min-width: 54px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.PreviewCanvas {
+  border: 1px solid var(--color-highlight);
+  border-radius: 14px;
+  background:
+    radial-gradient(
+        circle at 1px 1px,
+        var(--color-highlight) 1px,
+        transparent 0
+      )
+      0 0 / 24px 24px,
+    var(--color-background);
+  flex: 0 0 auto;
+  height: 620px;
+  min-height: 620px;
+  overflow: auto;
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.PreviewCanvasDraggable {
+  cursor: grab;
+  scrollbar-width: none;
+}
+
+.PreviewCanvasDraggable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.PreviewCanvasDragging {
+  cursor: grabbing;
+}
+
+.PreviewCanvasMindmap {
+  background:
+    radial-gradient(circle at 10% 0%, rgb(99 102 241 / 18%), transparent 38%),
+    radial-gradient(circle at 85% 0%, rgb(34 211 238 / 14%), transparent 36%),
+    radial-gradient(
+        circle at 1px 1px,
+        var(--color-highlight) 1px,
+        transparent 0
+      )
+      0 0 / 24px 24px,
+    var(--color-background);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 3%);
+}
+
+.Preview {
+  transform-origin: top left;
+}
+
+.PreviewPanSpace {
+  width: 2200px;
+  height: 1500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: top left;
+}
+
+.Preview :global(svg) {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+}
+
+.PreviewCanvasMindmap .Preview :global(svg) {
+  border-radius: 16px;
+  filter: drop-shadow(0 16px 44px rgb(0 0 0 / 38%));
+  backdrop-filter: blur(2px);
+}
+
+.LabelInline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.Range {
+  accent-color: var(--color-primary);
+}
+
+.InkGroup {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.Canvas {
+  width: 100%;
+  flex: 1;
+  min-height: 520px;
+  border: 1px dashed var(--color-highlight);
+  border-radius: 14px;
+  background:
+    linear-gradient(var(--color-background), var(--color-background)),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 23px,
+      var(--color-highlight) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 23px,
+      var(--color-highlight) 24px
+    );
+  touch-action: none;
+}
+
+.Inspector {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.InspectorTitle {
+  font-size: 16px;
+}
+
+.InspectorGrid {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.InspectorGrid strong {
+  display: block;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.InspectorLabel,
+.TextareaLabel,
+.Message,
+.Error {
+  font-size: 12px;
+}
+
+.InspectorLabel,
+.TextareaLabel,
+.Message {
+  opacity: 0.82;
+}
+
+.Textarea {
+  min-height: 380px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.Error {
+  color: var(--color-primary);
+}
+
+@media (max-width: 1536px) {
+  .Workspace {
+    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-areas:
+      'sidebar stage'
+      'inspector stage';
+  }
+
+  .Sidebar {
+    grid-area: sidebar;
+  }
+
+  .Stage {
+    grid-area: stage;
+    min-height: 780px;
+  }
+
+  .Inspector {
+    grid-area: inspector;
+  }
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .Sidebar,
+  .Stage,
+  .Inspector {
+    min-height: 0;
+  }
+
+  .PreviewCanvas {
+    height: 460px;
+    min-height: 460px;
+  }
+
+  .Canvas {
+    min-height: 380px;
+  }
+
+  .InspectorGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .Topbar {
+    border-radius: 14px;
+  }
+
+  .Workspace {
+    gap: 10px;
+  }
+
+  .Sidebar,
+  .Stage,
+  .Inspector {
+    border-radius: 14px;
+  }
+
+  .ToolbarFloating {
+    border-radius: 12px;
+  }
+
+  .Select {
+    width: 100%;
+  }
+
+  .InspectorGrid {
+    grid-template-columns: 1fr;
+  }
+}

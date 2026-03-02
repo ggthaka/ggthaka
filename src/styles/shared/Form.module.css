@@ -1,0 +1,45 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 192px;
+  position: relative;
+}
+
+.LogoIcon {
+  padding-bottom: 56px;
+}
+
+.Loading {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  outline: 2px solid var(--color-background);
+  z-index: 1000;
+}
+
+.Loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 2px solid var(--color-foreground);
+  border-right: 2px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

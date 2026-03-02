@@ -1,0 +1,508 @@
+.TableContainer {
+  padding: 14px;
+  border-radius: 24px;
+  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid var(--color-highlight);
+  min-width: calc(100% - 28px - 2px);
+  max-width: calc(100% - 28px - 2px);
+  background-color: var(--color-secondary);
+  position: relative;
+}
+
+.SearchWrapper {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  position: sticky;
+  left: 0px;
+}
+
+.SearchInput,
+.CustomLimitInput {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 16px;
+  font-family: inherit;
+  width: clamp(72px, 24vw, 128px);
+}
+
+.SearchInput:focus,
+.CustomLimitInput:focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+}
+
+.CustomLimitInput {
+  width: clamp(28px, 24vw, 56px);
+}
+
+.SearchButton {
+  padding: 6px;
+  border-radius: 10px;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border: none;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.Exports,
+.ColumnTogglePanel,
+.SortPanel,
+.FilterPanel {
+  border: 1px solid var(--color-highlight);
+  width: calc(100% - 32px - 2px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  background-color: var(--color-secondary);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.Exports > p {
+  font-weight: 700;
+}
+
+.GeneralExports {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.GeneralExports p {
+  font-weight: 700;
+}
+
+.ExportOptions,
+.FilterList,
+.SortActions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.SortButton {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+.SortButton[data-active='true'] {
+  border-color: var(--color-primary);
+}
+
+.ColumnToggleHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 800;
+  color: var(--color-foreground);
+  width: 100%;
+}
+
+.ColumnToggleActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ColumnToggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  width: 100%;
+}
+
+.ColumnToggleItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px;
+  background-color: var(--color-background);
+  position: relative;
+}
+
+.ColumnToggleItem[data-dragging='true'] {
+  opacity: 0.6;
+}
+
+.ColumnToggleLabel {
+  line-height: 1.2;
+}
+
+.PinActions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.PinButton {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: 1px solid var(--color-highlight);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.PinButton[data-active='true'] {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.ResizeHandle {
+  margin-left: auto;
+  height: 20px;
+  width: 6px;
+  cursor: col-resize;
+  position: relative;
+}
+
+.ResizeHandle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 2px;
+  width: 2px;
+  height: 100%;
+  background-color: var(--color-highlight);
+  opacity: 0.6;
+  border-radius: 999px;
+}
+
+.FilterWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.SearchInputB {
+  background-color: var(--color-secondary);
+}
+
+.BulkActionsBar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.BulkActionsSelected {
+  font-weight: 800;
+  color: var(--color-foreground);
+}
+
+.BulkActionsButtons,
+.BulkActionsClear {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.Icon {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.IconDefault {
+  transform: rotate(360deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.CheckboxLabel,
+.CheckboxWithText {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-foreground);
+  font-weight: 600;
+}
+
+.CheckboxInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.CustomCheckbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-highlight);
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.CheckboxLabel:hover .CustomCheckbox,
+.CheckboxWithText:hover .CustomCheckbox {
+  box-shadow: 0 0 0 2px var(--color-highlight);
+}
+
+.CheckboxInput:active + .CustomCheckbox {
+  transform: scale(0.96);
+}
+
+.CheckboxInput:focus-visible + .CustomCheckbox {
+  box-shadow: 0 0 0 2px var(--color-highlight);
+}
+
+.CheckboxInput:checked + .CustomCheckbox {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.CustomCheckbox::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -55%) rotate(-45deg);
+}
+
+.CheckboxInput:checked + .CustomCheckbox::after {
+  border-color: var(--color-background);
+}
+
+.CardGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.Card {
+  border: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.CardSelection {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid var(--color-highlight);
+}
+
+.CardImageWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-secondary);
+}
+
+.CardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.CardImageFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-foreground);
+  font-weight: 700;
+}
+
+.CardBody {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.CardTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--color-foreground);
+  /* line-height: 1.35; */
+}
+
+.CardDescription {
+  margin: 0;
+  color: var(--color-foreground);
+  opacity: 0.9;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.CardFields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.CardField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+}
+
+.CardFieldLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-foreground);
+  opacity: 0.7;
+}
+
+.CardFieldValue {
+  font-size: 13px;
+  color: var(--color-foreground);
+  word-break: break-word;
+}
+
+.PinnedCell {
+  box-shadow: inset 2px 0 0 0 var(--color-highlight);
+}
+
+.LoadingState {
+  width: 100%;
+}
+
+.Footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  left: 0px;
+  width: 100%;
+}
+
+.MetaInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: var(--color-foreground);
+}
+
+.Controls {
+  gap: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.CustomLimitButton,
+.NavButton {
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid var(--color-highlight);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 700;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.NavButton {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+.NavButton:disabled {
+  opacity: 32%;
+  cursor: not-allowed;
+}
+
+.PageNumber {
+  font-size: 14px;
+  color: var(--color-foreground);
+  padding: 0 8px;
+}
+
+@media (max-width: 768px) {
+  .CardGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,78 @@
+.Nav {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (width < 769px) {
+  .Large {
+    display: none;
+  }
+
+  .Small,
+  .Head {
+    all: inherit;
+  }
+
+  .Body {
+    position: absolute;
+    top: 57px;
+    bottom: 0px;
+    right: 0px;
+    padding: 56px 16px;
+    padding-left: 28px;
+    /* width: clamp(192px, 65vw, 256px); */
+    border-left: 1px solid var(--color-highlight);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 56px;
+    overflow-y: auto;
+    background-color: var(--color-secondary);
+    height: calc(100vh - 56px - 56px - 57px);
+    backdrop-filter: blur(8px);
+  }
+
+  @media (orientation: portrait) {
+    .Body {
+      min-width: 65%;
+    }
+  }
+
+  @media (orientation: landscape) {
+    .Body {
+      min-width: 45%;
+    }
+  }
+}
+
+@media (width > 768px) {
+  .Small {
+    display: none;
+  }
+  .Head {
+    cursor: pointer;
+  }
+  .Large {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 56px;
+  }
+}
+
+.Before {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.After {
+  transform: rotate(360deg);
+  transition: transform 0.5s ease-in-out;
+}

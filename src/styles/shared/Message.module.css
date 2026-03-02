@@ -1,0 +1,14 @@
+.Message {
+  background-color: var(--color-secondary);
+  width: calc(100% - 32px - 2px);
+  padding: 16px;
+  border-radius: 16px;
+  color: var(--color-foreground);
+  font-size: 16px;
+  border: 1px solid var(--color-highlight);
+  max-width: 256px;
+  hyphens: auto;
+  word-break: normal;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}

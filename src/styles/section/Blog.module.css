@@ -1,0 +1,344 @@
+.Blog {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-areas: 'main toc';
+  gap: 28px;
+  align-items: start;
+  overflow: visible;
+}
+
+.Progress {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 999999;
+  background: transparent;
+}
+
+.ProgressBar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  background-color: var(--color-primary);
+  /* opacity: 0.9; */
+}
+
+.BlogMain {
+  grid-area: main;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: visible;
+}
+
+.Header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.Title {
+  font-size: clamp(28px, 16vw, 56px);
+  /* line-height: 1.2; */
+}
+
+.Excerpt {
+  line-height: 1.5;
+  /* opacity: 0.9; */
+}
+
+.Meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  /* font-size: 14px; */
+}
+
+.Actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ActionButton {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-highlight);
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+.Image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--color-highlight);
+}
+
+.Content {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: visible;
+}
+
+.Content :global(h1),
+.Content :global(h2),
+.Content :global(h3),
+.Content :global(h4),
+.Content :global(h5),
+.Content :global(h6) {
+  line-height: 1.25;
+  margin: 22px 0 8px;
+}
+
+.Content :global(p),
+.Content :global(li),
+.Content :global(blockquote) {
+  line-height: 1.7;
+}
+
+.Content :global(ul),
+.Content :global(ol) {
+  padding-left: 24px;
+}
+
+.Content :global(blockquote) {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 12px;
+  opacity: 0.9;
+}
+
+.Content :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-highlight);
+}
+
+.Content :global(th),
+.Content :global(td) {
+  border: 1px solid var(--color-highlight);
+  padding: 10px;
+  text-align: left;
+}
+
+.Content :global(pre) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.SyntaxBlock {
+  color: #abb2bf !important;
+}
+
+.SyntaxBlock span:not([style]) {
+  color: #abb2bf !important;
+}
+
+.InlineCode {
+  border: 1px solid var(--color-highlight);
+  border-radius: 6px;
+  padding: 2px 6px;
+  background-color: var(--color-secondary);
+  font-size: 90%;
+}
+
+.MarkdownLink {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.MarkdownImageLink {
+  display: block;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.MarkdownImage {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+}
+
+.Toc {
+  grid-area: toc;
+  position: fixed !important;
+  top: calc(56px + 56px);
+  align-self: flex-start;
+  width: calc(300px);
+  box-sizing: border-box;
+  min-width: 0;
+  height: fit-content;
+  border: 1px solid var(--color-highlight);
+  border-radius: 28px;
+  padding: 24px;
+  background-color: var(--color-secondary);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.TocTitle {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.TocList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.TocFindWrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.TocFindInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.TocFindInput:focus-visible {
+  outline: 1px solid var(--color-highlight);
+  /* outline-offset: 2px; */
+}
+
+.TocFindButton {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  font-weight: 900;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.TocItem {
+  display: flex;
+  font-size: 14px;
+}
+
+.TocItem[data-level='3'] {
+  padding-left: 12px;
+}
+
+.TocLink {
+  text-decoration: none;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.TocLinkActive {
+  font-weight: 800;
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+.BlogNavigation {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.BlogNavigationLink,
+.BlogNavigationDisabled {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 54px;
+}
+
+.BlogNavigationLink {
+  text-decoration: none;
+  background-color: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.BlogNavigationDisabled {
+  background-color: var(--color-background);
+  opacity: 0.7;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.BlogNavigationLabel {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.BlogNavigationTitle {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .Toc {
+    right: calc(16px - 13px);
+  }
+
+  .Blog {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'toc'
+      'main';
+  }
+
+  .Toc {
+    position: static !important;
+    width: 100%;
+  }
+
+  .BlogNavigation {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1536px) {
+  .Toc {
+    right: calc(28px + 16px);
+  }
+}
+
+@media (min-width: 1537px) and (max-width: 2304px) {
+  .Toc {
+    right: calc(56px + 16px);
+  }
+}
+
+@media (min-width: 2305px) {
+  .Toc {
+    right: calc(112px + 16px + (100vw - 2305px) / 2);
+  }
+}

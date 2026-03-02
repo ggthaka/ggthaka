@@ -1,0 +1,382 @@
+.TerminalTool {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.TerminalTool
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.Tabs {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.Tab {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ActiveTab {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 280px;
+  gap: 12px;
+}
+
+.WorkspaceGit {
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+.SuggestionsPanel,
+.TerminalPanel,
+.AutocompleteAside {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.AutocompleteAside {
+  position: sticky;
+  top: 12px;
+  align-self: start;
+  max-height: calc(100vh - 140px);
+  overflow: hidden;
+}
+
+.PanelTitle {
+  margin: 0;
+  border-bottom: 1px solid var(--color-highlight);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  background-color: var(--color-background);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+.Suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 620px;
+  overflow: auto;
+  padding: 12px;
+}
+
+.NavigatorSection {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-highlight);
+}
+
+.PathCard {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.PathLabel {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.PathValue {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.Breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.NavActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Suggestion {
+  text-align: left;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  padding: 8px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.Suggestion:hover {
+  background-color: var(--color-secondary);
+}
+
+.TerminalPanel {
+  display: grid;
+  grid-template-rows: auto minmax(280px, 1fr);
+  min-height: 0;
+}
+
+.Composer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-highlight);
+  background-color: var(--color-background);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+.BrowserTextarea {
+  width: 100%;
+  min-height: 160px;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  padding: 8px 10px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.ScriptPreview {
+  grid-column: 1 / -1;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ScriptPreviewLabel {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.SyntaxBlock {
+  color: #abb2bf !important;
+}
+
+.SyntaxBlock span:not([style]) {
+  color: #abb2bf !important;
+}
+
+.AutocompleteItem {
+  border: 0;
+  border-bottom: 1px solid var(--color-highlight);
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.AutocompleteItem:last-child {
+  border-bottom: 0;
+}
+
+.AutocompleteItem:hover,
+.AutocompleteItemActive {
+  background-color: var(--color-secondary);
+}
+
+.AutocompleteDetail {
+  font-size: 11px;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+.BrowserHelpCard {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.BrowserHelpTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.BrowserHelpText {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.BrowserHelpExamples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Input {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  padding: 8px 10px;
+}
+
+.Button {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--color-secondary);
+}
+
+.Terminal {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-height: 0;
+  /* height: 500px; */
+  overflow-y: scroll;
+  padding: 12px;
+}
+
+.Empty {
+  margin: 0;
+  opacity: 0.82;
+  font-size: 13px;
+}
+
+.Error {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
+.Log {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  overflow: hidden;
+  height: fit-content;
+  min-height: fit-content;
+}
+
+.Command {
+  margin: 0;
+  border-bottom: 1px solid var(--color-highlight);
+  min-width: 0;
+  height: fit-content;
+  overflow-wrap: anywhere;
+}
+
+.Output {
+  margin: 0;
+  min-width: 0;
+  height: fit-content;
+  overflow: visible;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@media (max-width: 1024px) {
+  .Workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .AutocompleteAside {
+    position: static;
+    top: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .Composer {
+    grid-template-columns: 1fr;
+  }
+}

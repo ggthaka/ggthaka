@@ -1,0 +1,595 @@
+.MindmapTool {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.MindmapTool
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not(
+        [type='button']
+      ):not([type='submit']):not([type='reset']),
+    textarea,
+    select
+  ):focus {
+  outline: none;
+  outline: 1px solid var(--color-highlight);
+  background-color: var(--color-secondary);
+}
+
+.Topbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.TopbarLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Title {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+
+.Subtitle {
+  opacity: 0.82;
+  line-height: 1.45;
+}
+
+.ActionButton,
+.SidebarTab,
+.TemplateCard {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ActionButton,
+.SidebarTab {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.Workspace {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 12px;
+  min-height: calc(100vh - 260px);
+}
+
+.Sidebar,
+.Stage {
+  border: 1px solid var(--color-highlight);
+  border-radius: 18px;
+  background-color: var(--color-secondary);
+  min-width: 0;
+}
+
+.Sidebar {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.SidebarTabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.SidebarTabActive {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.TemplateGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+
+.NoteControls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.NoteActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.TemplateCard {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 4px;
+  padding: 10px;
+}
+
+.TemplateCard span {
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.NoteItemActive {
+  border-color: var(--color-primary);
+}
+
+.NoteEmpty {
+  border: 1px dashed var(--color-highlight);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  opacity: 0.82;
+  background-color: var(--color-background);
+}
+
+.OutlineList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: auto;
+}
+
+.OutlineList li {
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  background-color: var(--color-background);
+}
+
+.Stage {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ToolbarFloating {
+  border: 1px solid var(--color-highlight);
+  border-radius: 14px;
+  background-color: var(--color-background);
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.BoardToolbar {
+  border: 1px solid var(--color-highlight);
+  border-radius: 14px;
+  background-color: var(--color-background);
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.BoardHint {
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.NodeKindSelect {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 10px;
+}
+
+.Textarea {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background-color: var(--color-background);
+  color: inherit;
+  font: inherit;
+}
+
+.ZoomControl {
+  border: 1px solid var(--color-highlight);
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+}
+
+.ZoomControl span {
+  min-width: 54px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.PreviewCanvas {
+  border: 1px solid var(--color-highlight);
+  border-radius: 14px;
+  background:
+    radial-gradient(
+        circle at 1px 1px,
+        var(--color-highlight) 1px,
+        transparent 0
+      )
+      0 0 / 24px 24px,
+    var(--color-background);
+  flex: 0 0 auto;
+  height: 620px;
+  min-height: 620px;
+  overflow: auto;
+  padding: 14px;
+}
+
+.PreviewCanvasDraggable {
+  cursor: grab;
+  scrollbar-width: none;
+}
+
+.PreviewCanvasDraggable::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.PreviewCanvasDragging {
+  cursor: grabbing;
+}
+
+.PreviewCanvasMindmap {
+  background:
+    radial-gradient(circle at 10% 0%, rgb(99 102 241 / 18%), transparent 38%),
+    radial-gradient(circle at 85% 0%, rgb(34 211 238 / 14%), transparent 36%),
+    radial-gradient(
+        circle at 1px 1px,
+        var(--color-highlight) 1px,
+        transparent 0
+      )
+      0 0 / 24px 24px,
+    var(--color-background);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 3%);
+}
+
+.BoardStage {
+  position: relative;
+  width: 2600px;
+  height: 1800px;
+  transform-origin: top left;
+}
+
+.BoardSvg {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.EdgeLine {
+  fill: none;
+  stroke: var(--color-highlight);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.EdgeLineSelected {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.EdgeLineHit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16;
+  cursor: alias;
+}
+
+.EdgeLineGhost {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 3;
+  stroke-dasharray: 10 8;
+  stroke-linecap: round;
+}
+
+.BoardNode {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid var(--color-highlight);
+  border-radius: 16px;
+  background-color: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 12px;
+  cursor: grab;
+  user-select: none;
+}
+
+.BoardNode:hover .NodeQuickEdit,
+.BoardNodeSelected .NodeQuickEdit {
+  opacity: 1;
+}
+
+.BoardNodeSelected {
+  border-color: var(--color-primary);
+}
+
+.NodeTitle {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.NodeContent {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.NodeEditor {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.NodeQuickEdit {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: 1px solid var(--color-highlight);
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+  color: inherit;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 5px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.NodeEditorOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(0 0 0 / 45%);
+  padding: 20px;
+}
+
+.NodeEditorModal {
+  width: min(560px, 100%);
+  border: 1px solid var(--color-highlight);
+  border-radius: 16px;
+  background-color: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.NodeEditorTitle {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.NodeEditorActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.NodeKindLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.72;
+}
+
+.NodeSubtitle {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.NodeFeatureBlock {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.NodeFeatureRow {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.NodeChip {
+  border: 1px solid var(--color-highlight);
+  border-radius: 999px;
+  background-color: var(--color-secondary);
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.NodeCodePreview {
+  max-width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+  font-family: monospace;
+  font-size: 10px;
+  padding: 3px 6px;
+}
+
+.NodeKindNode {
+  border-style: solid;
+}
+
+.NodeKindSticky {
+  border-style: dashed;
+}
+
+.NodeKindGroup {
+  border-style: double;
+}
+
+.NodeKindDecision {
+  border-radius: 10px;
+  transform: rotate(45deg);
+}
+
+.NodeKindDecision .NodeContent {
+  transform: rotate(-45deg);
+}
+
+.NodeKindChecklist {
+  border-style: dashed;
+}
+
+.NodeKindTag {
+  border-radius: 999px;
+}
+
+.NodeKindReference {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.NodeKindComment {
+  border-radius: 16px 16px 16px 4px;
+}
+
+.NodeKindMedia {
+  border-style: solid;
+}
+
+.NodeKindCode {
+  font-family: monospace;
+}
+
+.NodeKindMetric {
+  border-style: solid;
+}
+
+.NodeKindMilestone {
+  border-style: dashed;
+}
+
+.NodeKindSwimlane {
+  border-radius: 8px;
+}
+
+.NodeKindPortal {
+  border-radius: 999px;
+}
+
+.NodeKindLegend {
+  border-style: dotted;
+}
+
+.NodeKindAiSummary {
+  border-style: double;
+}
+
+.NodeInput {
+  width: 100%;
+  border: 1px solid var(--color-highlight);
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 8px;
+}
+
+.NodeTerminal {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--color-primary);
+  cursor: crosshair;
+}
+
+.NodeTerminalTop {
+  top: -4px;
+  left: calc(50% - 4px);
+}
+
+.NodeTerminalRight {
+  right: -4px;
+  top: calc(50% - 4px);
+}
+
+.NodeTerminalBottom {
+  bottom: -4px;
+  left: calc(50% - 4px);
+}
+
+.NodeTerminalLeft {
+  left: -4px;
+  top: calc(50% - 4px);
+}
+
+@media (max-width: 1199px) {
+  .Workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .Sidebar {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 699px) {
+  .Workspace {
+    min-height: auto;
+  }
+
+  .PreviewCanvas {
+    height: 480px;
+    min-height: 480px;
+  }
+}
