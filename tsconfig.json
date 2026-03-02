@@ -1,34 +1,52 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "incremental": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "paths": {
+      "@components/layout": ["./src/exports/components/layout"],
+      "@components/page": ["./src/exports/components/page"],
+      "@components/provider": ["./src/exports/components/provider"],
+      "@components/section": ["./src/exports/components/section"],
+      "@components/shared": ["./src/exports/components/shared"],
+      "@fonts/static": ["./src/exports/fonts/static"],
+      "@fonts/variable": ["./src/exports/fonts/variable"],
+      "@library/contexts": ["./src/exports/library/contexts"],
+      "@library/handlers": ["./src/exports/library/handlers"],
+      "@library/hooks": ["./src/exports/library/hooks"],
+      "@library/json": ["./src/exports/library/json"],
+      "@library/policies": ["./src/exports/library/policies"],
+      "@library/utilities": ["./src/exports/library/utilities"],
+      "@styles/layout": ["./src/exports/styles/layout"],
+      "@styles/page": ["./src/exports/styles/page"],
+      "@styles/provider": ["./src/exports/styles/provider"],
+      "@styles/section": ["./src/exports/styles/section"],
+      "@styles/shared": ["./src/exports/styles/shared"]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2017"
   },
+  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
+    "**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }
