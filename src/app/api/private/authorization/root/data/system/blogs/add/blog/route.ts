@@ -1,0 +1,177 @@
+import { addBlog, getSession, getUser } from '@library/handlers';
+import {
+  blogPolicy,
+  cookiePolicy,
+  jsonPolicy,
+  originPolicy,
+  rolePolicy,
+  sessionPolicy,
+} from '@library/policies';
+import { deCipher, generateUuid } from '@library/utilities';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function OPTIONS(request: NextRequest) {
+  const enforceOriginPolicy = await originPolicy(request);
+  if (!enforceOriginPolicy.ok) {
+    return NextResponse.json(enforceOriginPolicy, {
+      status: 400,
+    });
+  }
+
+  return new NextResponse(null, {
+    status: 204,
+    headers: enforceOriginPolicy.data.headers,
+  });
+}
+
+export async function POST(
+  request: NextRequest,
+): Promise<NextResponse<API.Success | API.Failure>> {
+  try {
+    const enforceOriginPolicy = await originPolicy(request);
+    if (!enforceOriginPolicy.ok) {
+      return NextResponse.json(enforceOriginPolicy, {
+        status: 400,
+      });
+    }
+
+    const enforceJsonPolicy = await jsonPolicy(request);
+    if (!enforceJsonPolicy.ok) {
+      return NextResponse.json(enforceJsonPolicy, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const body = enforceJsonPolicy.data;
+
+    const getSessionCookie = await cookiePolicy({
+      action: 'read',
+      name: 'session_id',
+    });
+    if (!getSessionCookie.ok) {
+      return NextResponse.json(getSessionCookie, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const sessionId = deCipher({ cipher: getSessionCookie.data.cookie.value });
+    if (!sessionId.ok) {
+      return NextResponse.json(sessionId, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const session = await getSession({ by: { id: sessionId.data.message } });
+    if (!session.ok) {
+      return NextResponse.json(session, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const enforceSessionPolicy = sessionPolicy({
+      expiry: session.data.session.expired,
+    });
+    if (!enforceSessionPolicy.ok) {
+      return NextResponse.json(enforceSessionPolicy, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const user = await getUser({ by: { id: session.data.session.user_id } });
+    if (!user.ok) {
+      return NextResponse.json(user, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const enforceRolePolicy = rolePolicy({
+      userRole: user.data.user.role,
+      targetRole: 'root',
+    });
+    if (!enforceRolePolicy.ok) {
+      return NextResponse.json(enforceRolePolicy, {
+        status: 403,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const enforceBlogPolicy = blogPolicy({
+      slug: body.slug,
+      imageUrl: body.imageUrl,
+      title: body.title,
+      excerpt: body.excerpt,
+      content: body.content,
+      published: body.published,
+    });
+    if (!enforceBlogPolicy.ok) {
+      return NextResponse.json(enforceBlogPolicy, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const uuid = generateUuid();
+    if (!uuid.ok) {
+      return NextResponse.json(uuid, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    const now = new Date().toISOString();
+    const published =
+      typeof enforceBlogPolicy.data.published === 'boolean'
+        ? enforceBlogPolicy.data.published
+        : false;
+
+    const blog = await addBlog({
+      blog: {
+        id: uuid.data.uuid,
+        user_id: user.data.user.id,
+        title: enforceBlogPolicy.data.title ?? '',
+        content: enforceBlogPolicy.data.content ?? '',
+        image_url: enforceBlogPolicy.data.imageUrl ?? '',
+        slug: enforceBlogPolicy.data.slug ?? '',
+        excerpt: enforceBlogPolicy.data.excerpt ?? '',
+        published,
+        published_at: published ? now : undefined,
+        created: now,
+        updated: now,
+      },
+    });
+    if (!blog.ok) {
+      return NextResponse.json(blog, {
+        status: 400,
+        headers: enforceOriginPolicy.data.headers,
+      });
+    }
+
+    return NextResponse.json(
+      { ok: true, data: blog.data },
+      { status: 200, headers: enforceOriginPolicy.data.headers },
+    );
+  } catch (e: unknown) {
+    const error = e as Error;
+    return NextResponse.json(
+      {
+        ok: false,
+        error: {
+          message: 'Internal server error.',
+          origin: 'routes',
+          method: 'POST',
+          raw: {
+            name: error.name,
+            message: error.message,
+          },
+        },
+      },
+      { status: 500 },
+    );
+  }
+}
