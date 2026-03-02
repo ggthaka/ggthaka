@@ -1,0 +1,260 @@
+{
+  "options": {
+    "env": {
+      "COMMITS_LOG_PATH": ".ggthaka/tmp/commits.log",
+      "DIFF_LOG_PATH": ".ggthaka/tmp/diff.log"
+    }
+  },
+  "tasks": [
+    {
+      "command": "git diff --cached > $DIFF_LOG_PATH",
+      "detail": "Saves the current staged changes into a diff log file for reference or review.",
+      "label": "git > save staged diff",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git fetch --all",
+      "detail": "Fetches updates from all remotes and branches without merging.",
+      "label": "git > fetch all",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git commit --allow-empty -m 'chore(`/`): empty commit'",
+      "detail": "Creates an empty commit, useful for triggering workflows or CI/CD runs.",
+      "label": "git > create empty commit",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log staging..development --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit messages between the development and staging branches in a readable format.",
+      "label": "git > save staging..development --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log staging..development --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves a condensed one-line list of commits between development and staging branches.",
+      "label": "git > save staging..development --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log staging..production --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit messages between the production and staging branches in a readable format.",
+      "label": "git > save staging..production --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log staging..production --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves a condensed one-line list of commits between production and staging branches.",
+      "label": "git > save staging..production --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log production..staging --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit messages between the staging and production branches for review before release.",
+      "label": "git > save production..staging --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log production..staging --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves a short one-line summary of commits between staging and production branches.",
+      "label": "git > save production..staging --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log development..production --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit messages between the production and development branches for backtracking changes.",
+      "label": "git > save development..production --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log development..production --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves a one-line summary of commits between production and development branches.",
+      "label": "git > save development..production --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log development..staging --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit messages between the development and staging branches for backtracking changes.",
+      "label": "git > save development..staging --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log development..staging --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves a one-line summary of commits between development and staging branches.",
+      "label": "git > save development..staging --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log production..development --pretty=format:\"%s%n%b%n_%n\" > $COMMITS_LOG_PATH",
+      "detail": "Saves detailed commit logs spanning from production to development.",
+      "label": "git > save all branches --pretty",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "git log production..development --oneline > $COMMITS_LOG_PATH",
+      "detail": "Saves one-line commit summaries covering all branches from production to development.",
+      "label": "git > save all branches --oneline",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm dev",
+      "detail": "Runs the Next.js development server with live reload for local development.",
+      "group": "build",
+      "label": "next.js > dev",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm build",
+      "detail": "Builds the Next.js application for production deployment.",
+      "group": "build",
+      "label": "next.js > build",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm start",
+      "detail": "Starts the Next.js production server using the built application.",
+      "group": "build",
+      "label": "next.js > start",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm lint",
+      "detail": "Runs ESLint to check for code quality and style issues in the Next.js project.",
+      "group": "test",
+      "label": "next.js > lint",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm outdated",
+      "detail": "Lists dependencies that have newer versions available.",
+      "group": "none",
+      "label": "pnpm > outdated",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm update",
+      "detail": "Updates all project dependencies to their latest compatible versions.",
+      "group": "none",
+      "label": "pnpm > update",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "pnpm i",
+      "detail": "Installs all project dependencies as defined in the package.json file.",
+      "group": "none",
+      "label": "pnpm > install",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    }
+  ],
+  "version": "2.0.0"
+}
