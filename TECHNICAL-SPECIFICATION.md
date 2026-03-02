@@ -111,6 +111,7 @@ This specification covers the complete technical implementation of the ggthaka w
 | RPO    | Recovery Point Objective                                                   |
 | RTO    | Recovery Time Objective                                                    |
 | ADR    | Architecture Decision Record                                               |
+| `pg`   | Node‑postgres client library for direct PostgreSQL access                  |
 | Barrel | An index/re‑export file in `src/exports/*` providing a single import point |
 
 ### 1.4 References
@@ -185,6 +186,7 @@ The architecture strictly follows the layered structure mandated in `AGENTS.md`:
 
 - **UI Layer (`src/components/`)**: Components organised into five required categories: `layout/`, `page/`, `section/`, `shared/`, `provider/`.
 - **Domain / Library Layer (`src/library/`)**: Business logic split into `handlers/`, `policies/`, `utilities/`, `hooks/`, `contexts/`, and `json/`.
+- **Data Layer (`src/library/database/` + `database/`)**: PostgreSQL database accessed directly via the `pg` driver. Schema defined in `database/schema.sql`; connection pool instantiated in `src/library/database/client.ts`.
 - **Export Layer (`src/exports/`)**: Centralised re‑exports for all reusable modules, enabling clean alias imports.
 - **Styling Layer (`src/styles/`)**: CSS Modules mirroring the component category structure, with Pascal‑case class names.
 - **Routing Layer (`src/app/`)**: Next.js App Router for pages and API routes. API routes are kept thin, delegating to policies and handlers.
@@ -194,27 +196,30 @@ The architecture guarantees:
 - UI never talks directly to the database or file system.
 - Route handlers orchestrate only, enforcing policies before calling handlers.
 - Policies own validation and guard logic.
-- Handlers own business and persistence logic.
-- All reusable modules are exported via barrels and imported using TypeScript path aliases (e.g., `@components/section`, `@library/handlers`, `@styles/section`).
+- Handlers own business and persistence logic, including database access via the `pg` connection pool.
+- Only handlers may import and use the database client; no direct database access from routes, policies, or UI components.
+- All reusable modules are exported via barrels and imported using TypeScript path aliases (e.g., `@components/section`, `@library/handlers`, `@library/database`, `@styles/section`).
 
 ### 3.2 Technology Stack
 
-| Component                | Technology / Framework              | Version | Justification                                                                    |
-| ------------------------ | ----------------------------------- | ------- | -------------------------------------------------------------------------------- |
-| **Frontend Framework**   | Next.js                             | 14.x    | React‑based with hybrid rendering, excellent performance, built‑in optimisations |
-| **Programming Language** | TypeScript                          | 5.x     | Type safety, better developer experience, self‑documenting code                  |
-| **Styling**              | CSS Modules                         | -       | Scoped styles, no runtime overhead, aligns with project conventions              |
-| **Content Format**       | MDX                                 | Latest  | Markdown with component support for rich interactive elements                    |
-| **Content Processing**   | `next-mdx-remote`                   | Latest  | Serialise MDX content at build time                                              |
-| **Code Highlighting**    | `rehype-pretty-code`                | Latest  | Syntax highlighting for code blocks                                              |
-| **Diagram Support**      | Mermaid.js                          | Latest  | Technical diagrams in Markdown                                                   |
-| **Contact Form**         | Next.js API Routes                  | 14.x    | Serverless functions, no separate backend                                        |
-| **Email Delivery**       | Resend (or Nodemailer)              | Latest  | Reliable email API for contact form submissions                                  |
-| **Version Control**      | Git / GitHub                        | -       | Open‑source collaboration, CI/CD integration                                     |
-| **Hosting & CDN**        | Vercel                              | -       | Optimised for Next.js, global CDN, preview deployments                           |
-| **Package Manager**      | pnpm                                | 8.x     | Fast, disk‑efficient, strict dependency management                               |
-| **Analytics**            | Vercel Analytics / Simple Analytics | -       | Privacy‑focused, performance metrics                                             |
-| **Alias Configuration**  | TypeScript `paths` + `exports/`     | -       | Enforces barrel‑based imports and prevents deep relative paths                   |
+| Component                | Technology / Framework              | Version | Justification                                                                     |
+| ------------------------ | ----------------------------------- | ------- | --------------------------------------------------------------------------------- |
+| **Frontend Framework**   | Next.js                             | 14.x    | React‑based with hybrid rendering, excellent performance, built‑in optimisations  |
+| **Programming Language** | TypeScript                          | 5.x     | Type safety, better developer experience, self‑documenting code                   |
+| **Styling**              | CSS Modules                         | -       | Scoped styles, no runtime overhead, aligns with project conventions               |
+| **Content Format**       | MDX                                 | Latest  | Markdown with component support for rich interactive elements                     |
+| **Content Processing**   | `next-mdx-remote`                   | Latest  | Serialise MDX content at build time                                               |
+| **Code Highlighting**    | `rehype-pretty-code`                | Latest  | Syntax highlighting for code blocks                                               |
+| **Diagram Support**      | Mermaid.js                          | Latest  | Technical diagrams in Markdown                                                    |
+| **Contact Form**         | Next.js API Routes                  | 14.x    | Serverless functions, no separate backend                                         |
+| **Email Delivery**       | Resend (or Nodemailer)              | Latest  | Reliable email API for contact form submissions                                   |
+| **Version Control**      | Git / GitHub                        | -       | Open‑source collaboration, CI/CD integration                                      |
+| **Hosting & CDN**        | Vercel                              | -       | Optimised for Next.js, global CDN, preview deployments                            |
+| **Package Manager**      | pnpm                                | 8.x     | Fast, disk‑efficient, strict dependency management                                |
+| **Database**             | PostgreSQL                          | 16.x    | Robust relational database; structured data storage for posts, projects, contacts |
+| **Database Driver**      | `pg` (node‑postgres)                | 8.x     | Direct PostgreSQL access via connection pool; no ORM abstraction layer            |
+| **Analytics**            | Vercel Analytics / Simple Analytics | -       | Privacy‑focused, performance metrics                                              |
+| **Alias Configuration**  | TypeScript `paths` + `exports/`     | -       | Enforces barrel‑based imports and prevents deep relative paths                    |
 
 ### 3.3 System Context Diagram
 
@@ -273,15 +278,22 @@ The component diagram illustrates the internal structure of the Next.js applicat
     - **shared/** – reusable UI elements (Button, Card, CodeBlock, Diagram)
     - **provider/** – context providers (ThemeProvider)
   - **Library Layer (`src/library/`)**
-    - **handlers/** – business operations (content retrieval, contact processing)
+    - **handlers/** – business operations (content retrieval, contact processing, database queries)
     - **policies/** – validation rules (emailPolicy, messagePolicy, originPolicy)
     - **utilities/** – helper functions (sendEmail, rateLimiter, formatDate)
     - **hooks/** – client‑side logic (useBlogPost, useContactForm)
     - **contexts/** – React contexts (ThemeContext)
     - **json/** – static configuration (siteConfig.json)
+    - **database/** – PostgreSQL connection pool and query utilities
+      - `client.ts` – singleton `pg.Pool` instance
+      - `seed.ts` – database seeding script
+  - **Data Layer (`database/`)**
+    - `schema.sql` – database schema definition
+    - `migrations/` – versioned raw SQL migration files
   - **Exports Layer (`src/exports/`)**
     - components.ts – re‑exports all components
     - library.ts – re‑exports all library modules
+    - database.ts – re‑exports database client pool
     - styles.ts – re‑exports CSS Modules
   - **Styles Layer (`src/styles/`)**
     - **layout/** – CSS Modules for layout components
@@ -298,8 +310,10 @@ The component diagram illustrates the internal structure of the Next.js applicat
 2. Developer commits changes to GitHub (main branch).
 3. GitHub triggers Vercel build.
 4. Vercel runs the Next.js build process:
-   - Handlers in `src/library/handlers/` read the file system and parse MDX.
-   - Frontmatter is extracted; content is processed with remark/rehype plugins.
+   - Database migrations are applied (raw SQL migration scripts from `database/migrations/`).
+   - A sync step reads MDX files, extracts frontmatter, and upserts metadata into the PostgreSQL `posts` and `case_studies` tables.
+   - Handlers in `src/library/handlers/` query PostgreSQL via the `pg` connection pool for structured data (listings, tags, sort order) and read the file system for raw MDX body content.
+   - Content is processed with remark/rehype plugins.
    - Pages are generated statically (HTML) using `getStaticProps`.
    - Assets are optimised and hashed.
 5. Built files are deployed to Vercel CDN.
@@ -314,8 +328,8 @@ The component diagram illustrates the internal structure of the Next.js applicat
    - Enforces JSON content type.
    - Validates fields using policies (`emailPolicy`, `messagePolicy`).
    - If validation fails, returns `API.Failure` with 400 status.
-   - If validation passes, calls utility `sendEmail` (from `src/library/utilities/sendEmail.ts`).
-   - Utility sends email via Resend API.
+   - If validation passes, calls handler `createContactSubmission` which persists the submission to the `contact_submissions` table via the `pg` pool.
+   - Calls utility `sendEmail` (from `src/library/utilities/sendEmail.ts`) to forward via Resend API.
    - Returns `API.Success` with 200 status.
 5. Hook receives response and updates UI (success/error message).
 
@@ -328,7 +342,7 @@ The component diagram illustrates the internal structure of the Next.js applicat
    - If cached but stale, serves stale version and triggers background regeneration.
    - If not cached, forwards to origin server (Vercel).
 4. Origin server:
-   - Calls handler `getBlogPost` from `src/library/handlers/content.ts` to fetch post data.
+   - Calls handler `getBlogPost` from `src/library/handlers/content.ts` which queries PostgreSQL for post metadata and reads the MDX file for body content.
    - If post exists and is published, renders page.
    - If post does not exist, returns 404.
    - Rendered page is sent to visitor and cached at CDN with appropriate TTL.
@@ -398,9 +412,62 @@ The component diagram illustrates the internal structure of the Next.js applicat
 
 ### 5.1 Data Model
 
-The site uses a content‑based data model with no traditional database. All content resides in Markdown files in a top‑level `/content` directory. Metadata is stored as frontmatter.
+The site uses a **hybrid data model**. Content is authored as Markdown (MDX) files in a top‑level `/content` directory and metadata is synchronised to a PostgreSQL database at build time. The database serves as the source of truth for querying (listings, filtering, search), while MDX files remain the source of truth for authoring and body content.
 
-**Blog Post Data Structure (frontmatter + MDX):**
+**Relational Schema (PostgreSQL):**
+
+```
+posts
+│── id            UUID        PK, default gen_random_uuid()
+│── slug          VARCHAR     UNIQUE, NOT NULL
+│── title         VARCHAR     NOT NULL
+│── excerpt       TEXT
+│── published     BOOLEAN     DEFAULT false
+│── featured      BOOLEAN     DEFAULT false
+│── cover_image   VARCHAR
+│── reading_time  INTEGER
+│── published_at  TIMESTAMPTZ
+│── modified_at   TIMESTAMPTZ
+│── created_at    TIMESTAMPTZ DEFAULT now()
+│── updated_at    TIMESTAMPTZ DEFAULT now()
+
+tags
+│── id            UUID        PK, default gen_random_uuid()
+│── name          VARCHAR     UNIQUE, NOT NULL
+│── slug          VARCHAR     UNIQUE, NOT NULL
+
+post_tags (join table)
+│── post_id       UUID        FK → posts.id ON DELETE CASCADE
+│── tag_id        UUID        FK → tags.id  ON DELETE CASCADE
+│── PK (post_id, tag_id)
+
+case_studies
+│── id            UUID        PK, default gen_random_uuid()
+│── slug          VARCHAR     UNIQUE, NOT NULL
+│── title         VARCHAR     NOT NULL
+│── client        VARCHAR
+│── summary       TEXT
+│── technologies  TEXT[]      (PostgreSQL array)
+│── role          VARCHAR
+│── duration      VARCHAR
+│── outcome       TEXT
+│── featured      BOOLEAN     DEFAULT false
+│── image         VARCHAR
+│── published_at  TIMESTAMPTZ
+│── created_at    TIMESTAMPTZ DEFAULT now()
+│── updated_at    TIMESTAMPTZ DEFAULT now()
+
+contact_submissions
+│── id            UUID        PK, default gen_random_uuid()
+│── name          VARCHAR     NOT NULL
+│── email         VARCHAR     NOT NULL
+│── message       TEXT        NOT NULL
+│── ip_address    VARCHAR
+│── status        VARCHAR     DEFAULT 'new' (new | read | replied | archived)
+│── created_at    TIMESTAMPTZ DEFAULT now()
+```
+
+**Blog Post MDX Frontmatter (authoring source):**
 
 ```yaml
 ---
@@ -417,7 +484,7 @@ coverImage: /images/system-design-cover.jpg
 # Content in MDX...
 ```
 
-**Case Study Data Structure:**
+**Case Study MDX Frontmatter (authoring source):**
 
 ```yaml
 ---
@@ -455,13 +522,16 @@ image: /images/fintech-dashboard.png
 
 ### 5.2 Data Storage
 
-| Data Type           | Storage Location    | Format          | Access Method                       |
-| ------------------- | ------------------- | --------------- | ----------------------------------- |
-| Blog posts          | `/content/blog/`    | `.mdx` files    | File system read via handler        |
-| Case studies        | `/content/work/`    | `.mdx` files    | File system read via handler        |
-| Site config         | `src/library/json/` | `.json` / `.ts` | Direct import via alias             |
-| Static assets       | `/public/`          | Images, fonts   | Direct URL access                   |
-| Contact submissions | Not stored          | -               | Forwarded via email, no persistence |
+| Data Type           | Storage Location                 | Format          | Access Method                              |
+| ------------------- | -------------------------------- | --------------- | ------------------------------------------ |
+| Blog post metadata  | PostgreSQL `posts` table         | Relational rows | SQL queries via handler                    |
+| Blog post body      | `/content/blog/`                 | `.mdx` files    | File system read via handler               |
+| Case study metadata | PostgreSQL `case_studies`        | Relational rows | SQL queries via handler                    |
+| Case study body     | `/content/work/`                 | `.mdx` files    | File system read via handler               |
+| Tags                | PostgreSQL `tags`, `post_tags`   | Relational rows | SQL queries via handler                    |
+| Contact submissions | PostgreSQL `contact_submissions` | Relational rows | Persisted via handler; forwarded via email |
+| Site config         | `src/library/json/`              | `.json` / `.ts` | Direct import via alias                    |
+| Static assets       | `/public/`                       | Images, fonts   | Direct URL access                          |
 
 **File Organisation:**
 
@@ -479,6 +549,11 @@ image: /images/fintech-dashboard.png
     /images
       - architecture-diagram.png
       - performance-chart.jpg
+/database
+  - schema.sql
+  /migrations
+    - 001_initial.sql
+    - 002_add_contact_submissions.sql
 /public
   /images
     - profile.jpg
@@ -492,24 +567,22 @@ image: /images/fintech-dashboard.png
 
 **Build‑Time Data Flow:**
 
-1. **Handlers** (`src/library/handlers/content.ts`) read the file system to discover content paths.
-2. MDX files are parsed using `next-mdx-remote`; frontmatter extracted.
-3. Content is passed through remark/rehype plugins for:
-   - Syntax highlighting
-   - Mermaid diagram rendering
-   - Image optimisation
-4. **Pages** (`src/app/...`) call handlers via `getStaticProps` to fetch data.
-5. Static pages are generated for each content item.
-6. Index pages aggregate content with sorting and filtering.
-7. RSS feed and sitemap are generated using utilities.
-8. All assets are optimised and hashed for caching.
+1. **Database migrations** are applied (raw SQL scripts from `database/migrations/`) to ensure the database schema is up to date.
+2. A **sync script** (`src/library/database/seed.ts`) reads all MDX files, extracts frontmatter, and upserts metadata into the PostgreSQL `posts` and `case_studies` tables. Tags are normalised into the `tags` and `post_tags` tables.
+3. **Handlers** (`src/library/handlers/content.ts`) query PostgreSQL via the `pg` connection pool for structured listings (published posts sorted by date, featured projects, tag filtering).
+4. MDX body content is read from the file system and passed through remark/rehype plugins for syntax highlighting, Mermaid diagram rendering, and image optimisation.
+5. **Pages** (`src/app/...`) call handlers via `getStaticProps` to fetch data.
+6. Static pages are generated for each content item.
+7. Index pages aggregate content with sorting and filtering from database queries.
+8. RSS feed and sitemap are generated using utilities.
+9. All assets are optimised and hashed for caching.
 
 **Request‑Time Data Flow:**
 
 - **Static pages**: Served directly from CDN edge.
-- **ISR pages**: Checked for staleness; regenerated in background if needed.
-- **API routes**: Serverless function validates input using policies, calls utility to send email, returns response.
-- **No runtime database queries** – all content is pre‑rendered HTML.
+- **ISR pages**: Checked for staleness; regenerated in background if needed. During regeneration, handlers query PostgreSQL for fresh metadata.
+- **API routes**: Serverless function validates input using policies, calls handler to persist data to PostgreSQL via the `pg` pool, calls utility to send email, returns response.
+- **Database connections**: Managed via `pg.Pool` with configurable pool size, idle timeout, and SSL settings.
 
 ---
 
@@ -645,12 +718,22 @@ No administrative interface is exposed; content updates occur through Git commit
 
 **At Rest:**
 
-- No sensitive data stored in the application.
-- Contact form submissions are not persisted; forwarded immediately.
+- No sensitive data stored in the application codebase.
+- Contact form submissions persisted in PostgreSQL with minimal PII (name, email, message).
+- Database credentials stored as environment variables in Vercel (encrypted) and never committed.
+- PostgreSQL connections encrypted via SSL/TLS (`ssl: { rejectUnauthorized: true }` in `pg.Pool` config).
+- Database provider should support encryption at rest (provider‑dependent).
 - Environment variables for API keys stored in Vercel (encrypted) and never committed.
 
 **Security Headers:**
 Configured via `next.config.js` following `AGENTS.md` recommendations.
+
+**Database Security:**
+
+- Connection strings use SSL mode (`sslmode=require`).
+- `pg.Pool` configured with a bounded connection pool to limit open connections.
+- Database access restricted to handlers only (enforced by architecture).
+- All queries use parameterised placeholders (`$1`, `$2`, …) to prevent SQL injection.
 
 ### 7.3 Compliance
 
@@ -712,6 +795,13 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 - Vercel automatically scales serverless functions.
 - No manual infrastructure management.
 - Pay‑per‑use pricing matches traffic patterns.
+
+**Database Scaling:**
+
+- **Connection Pooling**: `pg.Pool` is configured with bounded pool size to handle serverless function concurrency without exhausting database connections.
+- **External Pooler** (optional): A connection pooler such as PgBouncer can be placed in front of PostgreSQL for high‑concurrency workloads.
+- **Read Replicas** (future): PostgreSQL supports streaming replication for read‑heavy traffic.
+- **Vertical Scaling**: Increase database instance resources (CPU, RAM) as traffic grows.
 
 **Future‑Proofing:**
 
@@ -794,7 +884,13 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 
 - **GitHub**: Primary source of truth with full history.
 - **Local clones**: Developer workstations.
-- **No database**: No separate backup needed.
+- **MDX files**: Backed by Git; database can be re‑seeded from MDX at any time.
+
+**Database:**
+
+- **Automated backups**: Scheduled `pg_dump` exports and WAL archiving for point‑in‑time recovery.
+- **Recovery capability**: Restore from dump files or replay WAL to any point within the archive window.
+- **Re‑seedable**: Since MDX files are the authoring source of truth, the `posts` and `case_studies` tables can be fully rebuilt from content files. Only `contact_submissions` data is unique to the database.
 
 **Configuration:**
 
@@ -805,7 +901,9 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 
 | Scenario                    | Recovery Method                  | RPO     | RTO                |
 | --------------------------- | -------------------------------- | ------- | ------------------ |
-| Accidental content deletion | Revert Git commit                | < 5 min | < 15 min           |
+| Accidental content deletion | Revert Git commit, re‑seed DB    | < 5 min | < 15 min           |
+| Database failure            | PostgreSQL replication failover  | < 1 min | < 5 min            |
+| Database data loss          | Restore from `pg_dump` or WAL    | < 5 min | < 30 min           |
 | Build failure               | Rollback to previous deploy      | N/A     | < 10 min           |
 | Domain/DNS issue            | Update DNS records               | N/A     | < 1 hour           |
 | Vercel outage               | Monitor status; platform‑managed | N/A     | Platform‑dependent |
@@ -820,13 +918,16 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 
 - **Framework**: Jest + React Testing Library
 - **Scope**: Utility functions, helper methods, isolated components (especially `src/library/utilities/`, `src/library/handlers/`).
+- **Database handlers**: Tested against a dedicated test PostgreSQL database (separate from production). The `pg.Pool` is mocked for pure unit tests; integration tests use a real test database.
 - **Target**: >80% coverage for utilities, >60% for components.
 
 **Integration Testing:**
 
 - **Framework**: Jest + React Testing Library
-- **Scope**: Component interactions, page rendering with mock data, API route integration.
-- **Examples**: Blog index rendering posts, case study navigation, form validation with policies.
+- **Scope**: Component interactions, page rendering with mock data, API route integration, database handler integration.
+- **Database integration**: Handlers are tested with a seeded test database to verify queries, upserts, and edge cases.
+- **Migration testing**: SQL migration scripts are run against the test database in CI to catch migration issues before production.
+- **Examples**: Blog index rendering posts from DB, case study navigation, form validation with policies, contact submission persistence.
 
 **End‑to‑End Testing:**
 
@@ -854,8 +955,10 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 **Test Data:**
 
 - Sample blog posts and case studies in `/content/test/` (ignored by production).
+- **Test database**: A separate PostgreSQL instance seeded with known data before each test run using `src/library/database/seed.ts`.
+- **Database reset**: Test database is reset between test suites by re‑running migration scripts and seed data to ensure isolation.
 - Mock API responses for contact form.
-- Edge cases: empty lists, long content, missing fields.
+- Edge cases: empty lists, long content, missing fields, duplicate slugs, invalid tags.
 
 ### 10.3 Quality Metrics
 
@@ -890,17 +993,21 @@ Configured via `next.config.js` following `AGENTS.md` recommendations.
 
 ## 12. Open Issues / Risks
 
-| Issue / Risk                           | Impact                       | Likelihood | Mitigation                                                        |
-| -------------------------------------- | ---------------------------- | ---------- | ----------------------------------------------------------------- |
-| **MDX performance with many posts**    | Build time increases         | Low        | Implement pagination, consider incremental builds, use ISR        |
-| **Email deliverability**               | Contact forms may go to spam | Medium     | Use reputable email service, SPF/DKIM setup, test thoroughly      |
-| **Open source maintenance burden**     | Time spent on issues/PRs     | Low        | Clear contribution guidelines, limit scope, maintainer discretion |
-| **Content creation consistency**       | Blog publishing stalls       | Medium     | Editorial calendar, batch writing, accountability                 |
-| **Build size with many images**        | Slow builds, large bundles   | Low        | Optimise images, use Next.js Image component, lazy loading        |
-| **Third‑party dependency updates**     | Breaking changes             | Low        | Regular updates, dependabot, thorough testing                     |
-| **Traffic spike costs**                | Unexpected Vercel bill       | Low        | Set budget alerts, monitor usage, caching reduces costs           |
-| **SEO ranking challenges**             | Low visibility               | Medium     | Follow SEO best practices, quality content, backlink strategy     |
-| **Adherence to AGENTS.md conventions** | Architectural drift          | Medium     | Automated linting, code reviews, pre‑flight checklist             |
+| Issue / Risk                           | Impact                            | Likelihood | Mitigation                                                        |
+| -------------------------------------- | --------------------------------- | ---------- | ----------------------------------------------------------------- |
+| **MDX performance with many posts**    | Build time increases              | Low        | Implement pagination, consider incremental builds, use ISR        |
+| **Email deliverability**               | Contact forms may go to spam      | Medium     | Use reputable email service, SPF/DKIM setup, test thoroughly      |
+| **Open source maintenance burden**     | Time spent on issues/PRs          | Low        | Clear contribution guidelines, limit scope, maintainer discretion |
+| **Content creation consistency**       | Blog publishing stalls            | Medium     | Editorial calendar, batch writing, accountability                 |
+| **Build size with many images**        | Slow builds, large bundles        | Low        | Optimise images, use Next.js Image component, lazy loading        |
+| **Third‑party dependency updates**     | Breaking changes                  | Low        | Regular updates, dependabot, thorough testing                     |
+| **Traffic spike costs**                | Unexpected Vercel bill            | Low        | Set budget alerts, monitor usage, caching reduces costs           |
+| **SEO ranking challenges**             | Low visibility                    | Medium     | Follow SEO best practices, quality content, backlink strategy     |
+| **Adherence to AGENTS.md conventions** | Architectural drift               | Medium     | Automated linting, code reviews, pre‑flight checklist             |
+| **Database connection limits**         | Serverless functions exhaust pool | Medium     | `pg.Pool` max size tuning, optional PgBouncer, monitor usage      |
+| **Database migration failures**        | Build blocked or data loss        | Low        | Test SQL migrations in CI, review scripts in PR, keep idempotent  |
+| **MDX‑to‑DB sync drift**               | Stale metadata in queries         | Low        | Sync runs on every build; CI validates sync step; checksums       |
+| **Contact data retention / GDPR**      | Compliance risk                   | Medium     | Implement data retention policy, automated purge after N days     |
 
 ---
 
@@ -914,6 +1021,9 @@ ggthaka/
 ├── PROGRESS.md
 ├── CONCEPT-NOTE.md
 ├── TECHNICAL-SPECIFICATION.md
+├── database/
+│   ├── schema.sql                      # Database schema
+│   └── migrations/                    # Versioned raw SQL migration files
 ├── content/
 │   ├── blog/
 │   │   ├── *.mdx
@@ -966,8 +1076,8 @@ ggthaka/
 │   │       └── ThemeProvider.tsx
 │   ├── library/
 │   │   ├── handlers/
-│   │   │   ├── content.ts            # read MDX files
-│   │   │   └── contact.ts            # (if needed)
+│   │   │   ├── content.ts            # query DB + read MDX
+│   │   │   └── contact.ts            # persist submissions
 │   │   ├── policies/
 │   │   │   ├── emailPolicy.ts
 │   │   │   ├── messagePolicy.ts
@@ -982,11 +1092,15 @@ ggthaka/
 │   │   │   └── useCaseStudy.ts
 │   │   ├── contexts/
 │   │   │   └── ThemeContext.tsx
+│   │   ├── database/
+│   │   │   ├── client.ts             # pg.Pool singleton
+│   │   │   └── seed.ts               # MDX → DB sync script
 │   │   └── json/
 │   │       └── siteConfig.json
 │   ├── exports/
 │   │   ├── components.ts
 │   │   ├── library.ts
+│   │   ├── database.ts
 │   │   ├── styles.ts
 │   │   └── ...
 │   ├── styles/
@@ -1020,6 +1134,10 @@ ggthaka/
 # Required for contact form
 EMAIL_SERVICE_API_KEY=resend_api_key_xxxxx
 CONTACT_EMAIL=hello@ggthaka.com
+
+# Required for database
+DATABASE_URL=postgres://user:password@host:5432/ggthaka?sslmode=require
+DIRECT_DATABASE_URL=postgres://user:password@host:5432/ggthaka?sslmode=require
 
 # Optional
 ANALYTICS_ID=xxxxx
@@ -1075,7 +1193,7 @@ SENTRY_DSN=xxxxx
 | §2.7 – Where Does My Code Go?       | Decision tree implicitly followed; explicit in §3.1.                               |
 | §3 – Core Architecture Principles   | Enforced throughout (§3.1).                                                        |
 | §4 – Repository Structure           | Exact structure detailed in Appendix A.                                            |
-| §5 – Security & Data Handling       | Covered in §7.                                                                     |
+| §5 – Security & Data Handling       | Covered in §7; database security added for PostgreSQL.                             |
 | §6 – Explicit Restrictions          | Respected; no stack changes, no secrets, etc.                                      |
 | §7 – Git & Branching                | CI/CD pipeline follows branching rules (§9.2).                                     |
 | §8 – Agent Command Protocol         | Not applicable to spec; for agents.                                                |
